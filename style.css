@@ -1,0 +1,106 @@
+html {
+    background-color: #192C3E;
+}
+.responsive-header {
+    background-color: #171D25;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.lo-go {
+    width: 156px;
+    height: 36px;
+}
+
+ul {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.nav-link-btn {
+    color: #c6d4df;
+}
+
+.nav-link-btn:hover {
+    text-decoration: underline;
+    filter: brightness(130%);
+}
+
+.search-icon {
+    position: absolute;
+    background-color: #008B8B;
+    /* left: 200px; */
+    right: 0;
+    top: 3px;
+    cursor: pointer;
+    margin: 8px;
+}
+
+.search-icon:hover{
+    filter: brightness(120%);
+}
+
+ .search-box {
+    
+    max-width: 220px;
+    margin: 10px;
+    display: flex;
+    position: relative;
+ }
+ #search-bar {
+    margin: 8px;
+    border-radius: 5px;
+    width: 100%;  
+    color: #c6d4df;
+    padding: 4px 16px;
+    background-color: #316282;
+ }
+
+ hr {
+
+    max-width: 220px;
+    margin-left: 8px;
+    background-color: #316282;
+    color: #316282;
+    height: 2px;
+    border-width: 0;
+}
+
+.type-list {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.btn {
+    background-color: transparent;
+    margin-left: 10px;
+    color: #66c0f4;
+    border: none;
+}
+
+.container-game {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 40px;
+}
+
+.body {
+    display: flex;
+}
+
+.cover {
+    width: 280px;
+    height: 182px;
+}
+
+.game-name{
+    font-family: "Motiva Sans", Sans-serif;
+    font-size: 1.2em;
+    padding: 10px;
+    color: #acdbf5;
+    background: linear-gradient(-45deg, rgba(64, 121, 153, 1) 5%, rgba(42, 62, 89, 1) 95%);
+}
