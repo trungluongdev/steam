@@ -6,6 +6,7 @@ html {
     padding: 15px;
     display: flex;
     justify-content: space-between;
+    /* position: fixed; */
 }
 
 .lo-go {
@@ -90,6 +91,7 @@ ul {
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
     margin: 40px;
+    position: relative;
 }
 
 .body {
@@ -113,3 +115,28 @@ ul {
     cursor: pointer;
     filter: brightness(130%);
 }
+
+.fui-loading-spinner-2 {
+    width: 80px;
+    height: 80px;
+    border: 7px solid;
+    border-color: #1dc071 rgba(0, 0, 0, 0) #1dc071 rgba(0, 0, 0, 0);
+    border-radius: 50%;
+    animation: AzwbD 1s linear infinite;
+    position: absolute;
+    left: 40%;
+  }
+  @keyframes AzwbD {
+    to {
+      transform: rotate(360deg);
+    }
+  };
+
+@media screen and (max-width: 740px) {
+    .type-list {
+        display: none;
+    };
+    body {
+        background-color: red;
+    }
+  }
