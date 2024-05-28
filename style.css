@@ -1,12 +1,21 @@
 html {
-    background-color: #192C3E;
+    background-color: #192c3e;
 }
+
 .responsive-header {
-    background-color: #171D25;
+    background-color: #171d25;
     padding: 15px;
     display: flex;
     justify-content: space-between;
     /* position: fixed; */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+body {
+    margin-top: 60px;
 }
 
 .lo-go {
@@ -39,27 +48,28 @@ ul {
     margin: 8px;
 }
 
-.search-icon:hover{
+.search-icon:hover {
     filter: brightness(120%);
 }
 
- .search-box {
+.search-box {
     max-width: 220px;
     margin: 10px;
     display: flex;
     position: relative;
- }
- #search-bar {
+}
+
+#search-bar {
     margin: 8px;
     border-radius: 5px;
     width: 100%;
-    min-width: 90%;  
+    min-width: 90%;
     color: #c6d4df;
     padding: 4px 16px;
     background-color: #316282;
- }
+}
 
- hr {
+hr {
     max-width: 220px;
     margin-left: 8px;
     background-color: #316282;
@@ -83,7 +93,6 @@ ul {
 
 .btn:hover {
     text-decoration: underline;
-
 }
 
 .container-game {
@@ -92,6 +101,7 @@ ul {
     gap: 10px;
     margin: 40px;
     position: relative;
+    margin-left: 270px;
 }
 
 .body {
@@ -103,12 +113,14 @@ ul {
     height: 182px;
 }
 
-.game-name{
+.game-name {
     font-family: "Motiva Sans", Sans-serif;
     font-size: 1.2em;
     padding: 10px;
     color: #acdbf5;
-    background: linear-gradient(-45deg, rgba(64, 121, 153, 1) 5%, rgba(42, 62, 89, 1) 95%);
+    background: linear-gradient(-45deg,
+            rgba(64, 121, 153, 1) 5%,
+            rgba(42, 62, 89, 1) 95%);
 }
 
 .img:hover {
@@ -125,18 +137,39 @@ ul {
     animation: AzwbD 1s linear infinite;
     position: absolute;
     left: 40%;
-  }
-  @keyframes AzwbD {
-    to {
-      transform: rotate(360deg);
-    }
-  };
+}
 
-@media screen and (max-width: 740px) {
-    .type-list {
-        display: none;
-    };
-    body {
-        background-color: red;
+@keyframes AzwbD {
+    to {
+        transform: rotate(360deg);
     }
-  }
+}
+
+@media only screen and (max-width: 740px) {
+    /* .type-list {
+        display: none;
+    } */
+
+    .right-side {
+        display: none;
+    }
+
+    .container-game {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 10px;
+        margin: 40px;
+        position: relative;
+    }
+}
+
+.left-side {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 250px;
+    z-index: 999;
+    padding: 10px;
+    height: 100%;
+    overflow-y: auto;
+}
