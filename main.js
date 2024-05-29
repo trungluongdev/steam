@@ -1,159 +1,157 @@
-const BASE_URL = "https://steam-api-dot-cs-platform-306304.et.r.appspot.com"
+const BASE_URL = "https://steam-api-dot-cs-platform-306304.et.r.appspot.com";
 
-async function getAllGames() {
+// Fetch all game data from API
+let q = "";
+async function getAllGames(query) {
     try {
-        const url = `${BASE_URL}/games?limit=30`;
+        let url = `${BASE_URL}/games?limit=30`;
+        if (query) {
+            url += `&genres=${query}`;
+        }
+        if (q) {
+            url += `&q=${q}`
+        }
         const res = await fetch(url);
         const data = await res.json();
-        console.log("data:", data);
         return data;
     } catch (error) {
         console.log("error:", error);
     }
 }
-// getAllGames();
+// End function----
+
+// render game element
+function renderGameElement(game) {
+    let Element = document.createElement("a");
+    Element.classList.add("cover");
+    let img = document.createElement("img");
+    img.src = game.header_image;
+    img.classList.add("img")
+    let gameName = document.createElement("div");
+    gameName.classList.add("game-name");
+    let p = document.createElement("p");
+    p.textContent = game.name;
+    gameName.appendChild(p);
+    Element.appendChild(img);
+    Element.appendChild(gameName);
+    return Element;
+};
+// End function
+
+// load all game on UI
 async function loadAllGames() {
-    let loading = document.querySelector(".fui-loading-spinner-2");
     try {
         const data = await getAllGames();
         let cover = document.querySelector(".container-game");
         cover.innerHTML = "";
         data.data.forEach(game => {
-            let Element = document.createElement("a");
-            Element.classList.add("cover");
-            let img = document.createElement("img");
-            img.src = game.header_image;
-            img.classList.add("img")
-            let gameName = document.createElement("div");
-            gameName.classList.add("game-name");
-            let p = document.createElement("p");
-            p.textContent = game.name;
-            gameName.appendChild(p);
-            Element.appendChild(img);
-            Element.appendChild(gameName);
-            Element.onclick = function () {
-
-            };
-            cover.appendChild(Element);
-            loading.style.display = "none";
+            const gameElement = renderGameElement(game);
+            cover.appendChild(gameElement);
         })
+
     } catch (error) {
         console.log("error:", error);
     };
 };
-setTimeout(loadAllGames, 1000);
+// End function----
 
-// get Games base on category
-async function getGamesByGenres() {
+// ----fetch genres of game from API
+async function getGenresList() {
     try {
-        const url = `${BASE_URL}/genres?limit=30`;
+        let url = `${BASE_URL}/genres?`;
         const res = await fetch(url);
         const data = await res.json();
-        console.log("data:", data);
         return data;
     } catch (error) {
-        console.log("error:", error)
-    };
-
+        console.log("error:", error);
+    }
 };
-let btn = document.querySelectorAll(".btn");
+// End function----
+
+// Load genres of game on UI
+// CapitalizeFirstLetter function
+function capitalizeFirstLetter(string) {
+    if (typeof string !== "string") {
+        console.log("Invalid input for capitalization:", string);
+        return "";
+    }
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+async function loadGenresList() {
+    try {
+        const data = await getGenresList();
+        let typeList = document.querySelector(".type-list");
+        data.data.forEach(game => {
+            let li = document.createElement("li");
+            let button = document.createElement("button");
+            button.classList.add("btn");
+            button.textContent = capitalizeFirstLetter(game.name);
+            li.appendChild(button);
+            typeList.appendChild(li);
+        })
+
+    } catch (error) {
+        console.log("error: ", error);
+    }
+}
+// End function----
+
+let loading = document.querySelector(".fui-loading-spinner-2");
+
+
+// call function to load genres and all game on UI
+setTimeout(loadGenresList, 1000);
+setTimeout(loadAllGames, 700);
+// End function
+
+
+
+// get Games base on category
+
 async function gameByGenres(genres) {
     try {
-        const data = await getAllGames();
+        const data = await getAllGames(genres);
+        console.log(data);
         let cover = document.querySelector(".container-game");
         cover.innerHTML = "";
-
-        data.data.forEach((game) => {
-            if (game.genres.includes(genres)) {
-                let Element = document.createElement("a");
-                Element.classList.add("cover");
-                let img = document.createElement("img");
-                img.src = game.header_image;
-                img.classList.add("img")
-                let gameName = document.createElement("div");
-                gameName.classList.add("game-name");
-                let p = document.createElement("p");
-                p.textContent = game.name;
-                gameName.appendChild(p);
-                Element.appendChild(img);
-                Element.appendChild(gameName);
-                Element.onclick = function () {
-                    console.log(game.appid);
-                };
-                cover.appendChild(Element);
-
-            }
-        }
-        )
+        data.data.forEach(game => {
+            gameElement = renderGameElement(game);
+            cover.appendChild(gameElement);
+        })
     }
     catch (error) {
         console.log("error:", error);
     }
 };
+// End function
 
+
+// call function to load game base on category
+let btn = document.querySelectorAll(".btn");
 btn.forEach(button => {
     button.addEventListener("click", (e) => {
-        genres = e.target.textContent.toLowerCase();
+        const genres = e.target.textContent.toLowerCase();
+        console.log(genres);
+        let cover = document.querySelector(".container-game");
+        // setTimeout(() => gameByGenres(genres), 500);
         gameByGenres(genres);
     });
 });
+// End function
 
-
-// search function
-
-const typeGame = async () => {
-    const search = document.querySelector("#search-bar");
-    try {
-        let queryString = "";
-        if (search.value) {
-            queryString += `&steamspy_tags = ${search.value.toLowerCase()}`;
-            return queryString;
-            console.log(queryString);
-        };
-
-        const url = `${BASE_URL}/games?limit=30${queryString}`;
-
-        const res = await fetch(url);
-        const data = await res.json();
-        console.log("data:", data);
-        return data;
-
-    } catch (err) {
-        console.log("error:", err.message);
-    }
+// search game function
+async function searchGame() {
+    q = search.value;
+    const data = await getAllGames();
+    let cover = document.querySelector(".container-game");
+    cover.innerHTML = "";
+    data.data.forEach(game => {
+        const gameElement = renderGameElement(game);
+        cover.appendChild(gameElement);
+    })
 }
-typeGame()
-const loadGameTyped = async () => {
-    let loading = document.querySelector(".fui-loading-spinner-2");
-    try {
-        const data = await typeGame();
-
-        let cover = document.querySelector(".container-game");
-        cover.innerHTML = "";
-        data.data.forEach(game => {
-            let Element = document.createElement("a");
-            Element.classList.add("cover");
-            let img = document.createElement("img");
-            img.src = game.header_image;
-            img.classList.add("img")
-            let gameName = document.createElement("div");
-            gameName.classList.add("game-name");
-            let p = document.createElement("p");
-            p.textContent = game.name;
-            gameName.appendChild(p);
-            Element.appendChild(img);
-            Element.appendChild(gameName);
-            Element.onclick = function () {
-
-            };
-            cover.appendChild(Element);
-            loading.style.display = "none";
-        });
-    } catch (err) {
-        console.log("error:", err.message);
-    }
-
-};
-
-
-search.addEventListener("input", loadGameTyped);
+// call function when users search game
+const search = document.querySelector("#search-bar");
+search.addEventListener("input", () => setTimeout(searchGame, 1000));
+// End function

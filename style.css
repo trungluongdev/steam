@@ -40,12 +40,15 @@ ul {
 
 .search-icon {
     position: absolute;
-    background-color: #316282;
+    /* background-color: #316282; */
     /* left: 200px; */
     right: 0;
+    background-color: transparent;
     top: 3px;
     cursor: pointer;
     margin: 8px;
+    border-radius: 2px;
+    /* display: none; */
 }
 
 .search-icon:hover {
@@ -61,11 +64,13 @@ ul {
 
 #search-bar {
     margin: 8px;
+    height: 100%;
     border-radius: 5px;
     width: 100%;
-    min-width: 90%;
+    /* min-width: 90%; */
     color: #c6d4df;
     padding: 4px 16px;
+    padding-right: 10px;
     background-color: #316282;
 }
 
@@ -85,6 +90,7 @@ hr {
 }
 
 .btn {
+    font-size: 18px;
     background-color: transparent;
     margin-left: 10px;
     color: #66c0f4;
@@ -93,6 +99,7 @@ hr {
 
 .btn:hover {
     text-decoration: underline;
+    filter: brightness(120%);
 }
 
 .container-game {
@@ -145,10 +152,14 @@ hr {
     }
 }
 
+@media only screen and (max-width: 740px) {}
+
+;
+
 @media only screen and (max-width: 740px) {
-    /* .type-list {
+    .type-list {
         display: none;
-    } */
+    }
 
     .right-side {
         display: none;
@@ -156,7 +167,7 @@ hr {
 
     .container-game {
         display: grid;
-        grid-template-columns: repeat(1, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 10px;
         margin: 40px;
         position: relative;
