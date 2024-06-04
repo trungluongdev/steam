@@ -166,6 +166,7 @@ async function gameByGenres(genres) {
 // End function
 
 // search game function
+const search = document.querySelector("#search-bar");
 async function searchGame() {
     q = search.value;
     const data = await getAllGames();
@@ -177,12 +178,11 @@ async function searchGame() {
 
 }
 // call function when users search game
-const search = document.querySelector("#search-bar");
 search.addEventListener("input", () => {
     let cover = document.querySelector(".container-game");
     cover.innerHTML = "";
 
-    searchGame
+    searchGame();
 
 });
 // End function
