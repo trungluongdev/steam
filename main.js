@@ -3,6 +3,8 @@ const BASE_URL = "https://steam-api-dot-cs-platform-306304.et.r.appspot.com";
 // Fetch all game data from API
 let q = "";
 async function getAllGames(query) {
+    let cover = document.querySelector(".container-game");
+    cover.innerHTML = '<div class="fui-loading-spinner-2"></div>'
     try {
         let url = `${BASE_URL}/games?limit=30`;
         if (query) {
@@ -37,6 +39,8 @@ function renderGameElement(game) {
     Element.appendChild(gameName);
 
     Element.addEventListener('click', async () => {
+        let cover = document.querySelector(".container-game");
+        cover.innerHTML = '<div class="fui-loading-spinner-2"></div>'
         const appid = game.appid;
         const gameDetailsData = await getGameDetails(appid);
         console.log(gameDetailsData);
@@ -148,6 +152,7 @@ async function gameByGenres(genres) {
     try {
         const data = await getAllGames(genres);
         let cover = document.querySelector(".container-game");
+        // return
         cover.innerHTML = "";
         data.data.forEach(game => {
             gameElement = renderGameElement(game);
@@ -165,10 +170,6 @@ async function searchGame() {
     q = search.value;
     const data = await getAllGames();
     let cover = document.querySelector(".container-game");
-    // cover.innerHTML = "";    
-    // let loadingIcon = document.createElement('div');
-    // loadingIcon.classList.add('fui-loading-spinner-2');
-    // cover.appendChild(loadingIcon);
     data.data.forEach(game => {
         const gameElement = renderGameElement(game);
         cover.appendChild(gameElement);
@@ -180,13 +181,9 @@ const search = document.querySelector("#search-bar");
 search.addEventListener("input", () => {
     let cover = document.querySelector(".container-game");
     cover.innerHTML = "";
-    // let loadingIcon = document.createElement('div');
-    // loadingIcon.classList.add('fui-loading-spinner-2');
-    // cover.appendChild(loadingIcon);
-    setTimeout(searchGame, 1000);
-    // if (searchGame.done) {
-    //     loadingIcon.style.display = 'none';
-    // }
+
+    searchGame
+
 });
 // End function
 
@@ -205,6 +202,7 @@ async function getGameDetails(appid) {
     }
 };
 
+// function to render game detail on UI when its click
 async function renderGameDetails(gameDetailsData) {
     let cover = document.querySelector(".container-game");
     cover.innerHTML = '';
@@ -250,7 +248,8 @@ async function renderGameDetails(gameDetailsData) {
 
     let tag = document.createElement('p');
     tag.classList.add('text');
-    tag.textContent = gameDetailsData.data.steamspy_tags;
+    // tag.textContent = gameDetailsData.data.steamspy_tags.join(', ');
+    tag.textContent = capitalizeFirstLetter(gameDetailsData.data.steamspy_tags.join(', '));
 
     let tagContainer = document.createElement('div');
     tagContainer.classList.add('tags-container');
